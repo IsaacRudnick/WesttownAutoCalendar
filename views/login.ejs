@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="92967650602-e7g2asfp18qkl8vt6db3906jg5ssj5p7.apps.googleusercontent.com"
+    />
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  </head>
+
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    <script>
+      function onSignIn(googleUser) {
+        console.log("Attempting to login");
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id_token }),
+        })
+          .then((res) => {
+            if (res.redirected == true) {
+              location.assign(res.url);
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    </script>
+  </body>
+</html>
