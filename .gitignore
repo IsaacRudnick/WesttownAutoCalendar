@@ -1,6 +1,6 @@
 # MANUALLY ADDED
-
-google_app_token.json
+google_credentials.json
+service_account_key.json
 
 # Logs
 logs
