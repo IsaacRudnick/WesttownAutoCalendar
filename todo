@@ -1,0 +1,3 @@
+Need to add a list of google calendar event IDs per user
+    program should remove all events from the google calendar that are not in the icalendar 
+        (but only if we made it. Maybe prefix IDs? don't like that too much but its feasible)

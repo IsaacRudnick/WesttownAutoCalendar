@@ -50,7 +50,37 @@ async function update_user(user) {
     .then((res) => res.text())
     .then((text) => {
       // Parse the raw iCal data
-      const directEvents = ical.sync.parseICS(text);
+      const ical_events = ical.sync.parseICS(text);
+
+      // Get a list of all the google calendar events for this user
+      gcal_events = calendar.events.list(
+        {
+          calendarId: user.email,
+          timeMin: new Date().toISOString(),
+          timeMax: addWeeks(new Date(), 2 * 4).toISOString(),
+        },
+        (err, res) => {
+          gcal_events = res.data.items;
+        }
+      );
+
+      for (const x in ical_events) {
+        ical_event = ical_events[x];
+        if (ical_event.type !== "VEVENT") continue;
+
+        refactored_uid = (
+          ical_event.summary +
+          ical_event.start +
+          ical_event.uid.toLowerCase() +
+          ical_event.end
+        )
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "-");
+
+        if (gcal_events?.refactored_uid) continue;
+        // If the event is not in the google calendar, add it
+        console.log("Event doesn't exist in google calendar");
+      }
     });
 }
 
@@ -83,4 +113,5 @@ async function update_all_users() {
 update_user({
   ical_feed_url:
     "https://westtown.myschoolapp.com/podium/feed/iCal.aspx?z=cOXDirz06uMqQcrHv6xbrJEZh%2bztBuNCX9t%2frXSVl9uF9N9e9STkQbfvqOeH5hif5C5Poq38hqp95ClTGrOdYv2SZKuaINsgs2cl8yqrZ6duI7AQz0l%2bW65hAdeshut4",
+  email: "roo.turin@gmail.com",
 });
