@@ -9,6 +9,9 @@ const morgan = require("morgan");
 
 require("./calendar_updater.js");
 
+// allows url encoding
+app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 // Logging middleware
 app.use(morgan("dev"));

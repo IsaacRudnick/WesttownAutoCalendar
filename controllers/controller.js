@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const CLIENT_ID = "92967650602-e7g2asfp18qkl8vt6db3906jg5ssj5p7.apps.googleusercontent.com";
 const oauth2_client = new OAuth2Client(CLIENT_ID);
+const User = require("../models/user");
 
 const login_get = (req, res) => {
   res.render("login");
@@ -16,15 +17,19 @@ const login_post = (req, res) => {
       idToken: token,
       audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
     });
+    var query = { email: ticket.getPayload().email },
+      update = {},
+      options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    return ticket.getPayload();
+    const user = await User.findOneAndUpdate(query, update, options);
+
+    return user;
   }
 
-  verify().then((ticket) => {
-    jwt_token = jwt.sign({ email: ticket.email }, process.env.JWT_SECRET);
+  verify().then((user) => {
+    jwt_token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
     // FIXME: {secure: true} for production.
     res.cookie("JWT", jwt_token, { httpOnly: true });
-    console.log("🚀 ~ file: controller.js ~ line 28 ~ verify ~ ticket.email", ticket.email);
     res.redirect("/profile");
   });
 };
@@ -35,8 +40,18 @@ const profile_get = (req, res) => {
 };
 
 const profile_post = (req, res) => {
-  // TODO: Do something with the profile data
-  console.log("🚀 ~ file: controller.js ~ line 35 ~  res.body", res.body);
+  console.log("🚀 ~ file: controller.js ~ line 44 ~ req.body.ical_feed_url", req.body.ical_feed_url);
+  const user = User.findOneAndUpdate(
+    { email: req.verified_email },
+    { ical_feed_url: req.body.ical_feed_url },
+    (err, user) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("🚀 ~ file: controller.js ~ line 48 ~ user ~ user", user);
+    }
+  );
+
   res.render("profile");
 };
 

@@ -18,7 +18,7 @@ function authenticateToken(req, res, next) {
     }
 
     // If no error, assign id to req.id
-    req.email = decoded.email;
+    req.verified_email = decoded.email;
     next();
   });
 }
