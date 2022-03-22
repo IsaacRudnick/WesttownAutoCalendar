@@ -59,11 +59,6 @@ async function update_user(user) {
               continue;
             }
 
-            // console.log(
-            //   "🚀 ~ file: calendar_updater.js ~ line 111 ~ refactored_uid",
-            //   refactored_uid
-            // );
-
             calendar.events.insert({
               calendarId: user.email,
               resource: {
@@ -87,33 +82,34 @@ async function update_user(user) {
     });
 }
 
-// function update_all_users() {
-//   // For all users in DB, update them using update_user function
-//   User.find({}, (err, users) => {
-//     for (var i = 0; i < users.length; i++) {
-//       update_user(users[i]);
-//     }
-//   });
-// }
+async function update_all_users() {
+  // For all users in DB, update them using update_user function
+  User.find({}, (err, users) => {
+    for (var i = 0; i < users.length; i++) {
+      user = users[i];
+      update_user({ email: user.email, ical_feed_url: user.ical_feed_url });
+    }
+  });
+}
 
-// // Create task to check all BGs and schedule it for every 5 minutes (and immediately)
-// const update_all_users_task = new AsyncTask("update all users' calendars", update_all_users, (err) => {
-//   console.log(err);
-// });
-
-// scheduler.addSimpleIntervalJob(
-//   new SimpleIntervalJob(
-//     // Every 2 hours, check all users' feeds and update their calendars
-//     { minutes: 2 * 60, runImmediately: true },
-//     update_all_users_task
-//   )
-// );
-
-update_user({
-  email: "roo.turin@gmail.com",
-  ical_feed_url:
-    "https://westtown.myschoolapp.com/podium/feed/iCal.aspx?z=cOXDirz06uMqQcrHv6xbrJEZh%2bztBuNCX9t%2frXSVl9uF9N9e9STkQbfvqOeH5hif5C5Poq38hqp95ClTGrOdYv2SZKuaINsgs2cl8yqrZ6duI7AQz0l%2bW65hAdeshut4",
+// Create task to check all BGs and schedule it for every 5 minutes (and immediately)
+const update_all_users_task = new AsyncTask("update all users' calendars", update_all_users, (err) => {
+  console.log(err);
 });
+
+scheduler.addSimpleIntervalJob(
+  new SimpleIntervalJob(
+    // Every 2 hours, check all users' feeds and update their calendars
+    { minutes: 2 * 60, runImmediately: true },
+    update_all_users_task
+  )
+);
+
+// update_user({
+//   email: "roo.turin@gmail.com",
+//   ical_feed_url:
+//     "https://westtown.myschoolapp.com/podium/feed/iCal.aspx?z=cOXDirz06uMqQcrHv6xbrJEZh%2bztBuNCX9t%2frXSVl9uF9N9e9STkQbfvqOeH5hif5C5Poq38hqp95ClTGrOdYv2SZKuaINsgs2cl8yqrZ6duI7AQz0l%2bW65hAdeshut4",
+// });
 
 // Allow other files to access the update_user function
 // So when a user sets up the service, it runs once for them
