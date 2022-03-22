@@ -7,7 +7,8 @@ require("dotenv").config();
 
 const morgan = require("morgan");
 
-require("./calendar_updater.js");
+const calendar_updater = require("./calendar_updater.js");
+calendar_updater.start_update_loop();
 
 // allows url encoding
 app.use(express.urlencoded({ extended: true }));
