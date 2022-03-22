@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/InformationlessUsername/WesttownAutoCalendar#readme",
   "dependencies": {
+    "cli-progress": "^3.10.0",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
