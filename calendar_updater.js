@@ -151,11 +151,11 @@ scheduler.addSimpleIntervalJob(
   )
 );
 
-update_user({
-  email: "roo.turin@gmail.com",
-  ical_feed_url:
-    "https://westtown.myschoolapp.com/podium/feed/iCal.aspx?z=cOXDirz06uMqQcrHv6xbrJEZh%2bztBuNCX9t%2frXSVl9uF9N9e9STkQbfvqOeH5hif5C5Poq38hqp95ClTGrOdYv2SZKuaINsgs2cl8yqrZ6duI7AQz0l%2bW65hAdeshut4",
-});
+// update_user({
+//   email: "roo.turin@gmail.com",
+//   ical_feed_url:
+//     "https://westtown.myschoolapp.com/podium/feed/iCal.aspx?z=cOXDirz06uMqQcrHv6xbrJEZh%2bztBuNCX9t%2frXSVl9uF9N9e9STkQbfvqOeH5hif5C5Poq38hqp95ClTGrOdYv2SZKuaINsgs2cl8yqrZ6duI7AQz0l%2bW65hAdeshut4",
+// });
 
 // Allow other files to access the update_user function
 // So when a user sets up the service, it runs once for them

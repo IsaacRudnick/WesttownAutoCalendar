@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 const routes = require("./routes/routes");
@@ -13,6 +14,8 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 // used to parse JSON bodies and replaces deprecated body-parser
 app.use(express.json());
+// allow cookie reading
+app.use(cookieParser());
 
 app.use("", routes);
 
