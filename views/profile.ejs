@@ -3,9 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
   </head>
 
-  <body>
+  <body onload="init()">
+    <h1>Profile page</h1>
+    <script>
+      function init() {
+        gapi.load("auth2", () => {
+          /* Ready. Make a call to gapi.auth2.init or some other API */
+        });
+      }
+    </script>
+
     <a href="#" onclick="signOut();">Sign out</a>
     <script>
       function signOut() {
