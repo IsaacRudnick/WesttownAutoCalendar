@@ -6,6 +6,8 @@ const userSchema = new Schema(
   {
     // user email
     email: { type: String },
+    // ical feed url
+    ical_feed_url: { type: String },
   },
   { timestamps: true }
 );

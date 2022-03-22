@@ -26,7 +26,18 @@ login_post = (req, res) => {
   });
 };
 
+profile_get = (req, res) => {
+  res.render("profile");
+};
+
+profile_post = (req, res) => {
+  // TODO: Do something with the profile data
+  res.render("profile");
+};
+
 module.exports = {
   login_get,
   login_post,
+  profile_get,
+  profile_post,
 };

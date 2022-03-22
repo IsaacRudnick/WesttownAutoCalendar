@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
-const routes = require("./routes");
-const morgan = require("morgan");
+const routes = require("./routes/routes");
 const mongoose = require("mongoose");
+require("dotenv").config();
+
+const morgan = require("morgan");
 
 require("./calendar_updater.js");
 
@@ -18,5 +20,9 @@ app.use("", routes);
 const dbURI = process.env.DBURI;
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(process.env.PORT || 8080)) // listen for requests
+  .then((result) => {
+    port = process.env.PORT || 8080;
+    app.listen(port);
+    console.log(`Listening on port ${port}`);
+  }) // listen for requests
   .catch((err) => console.log(err)); // log any errors
