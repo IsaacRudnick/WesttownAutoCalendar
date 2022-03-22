@@ -30,7 +30,7 @@ async function update_user(user) {
 
       // Create progress bar with denominator of number of ical events
       const progress_bar = new cliProgress.SingleBar(
-        { linewrap: true, barsize: 80 },
+        { linewrap: true, barsize: process.stdout.columns / 2 },
         cliProgress.Presets.shades_classic
       );
       // Subtracting 2 is a bodge to account for the first and last item not being actual events
@@ -131,7 +131,7 @@ async function update_user(user) {
           }
           // Effective end of function
           // Add a pretty line to the console
-          console.log("\n\n" + "=".repeat(process.stdout.columns) + "\n");
+          console.log("\n" + "=".repeat(process.stdout.columns) + "\n");
         }
       );
     });

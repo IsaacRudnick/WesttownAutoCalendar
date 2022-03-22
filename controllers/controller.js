@@ -52,7 +52,7 @@ const profile_post = (req, res) => {
     calendar_updater.update_user({ email, ical_feed_url });
   });
 
-  res.render("profile");
+  res.render("success");
 };
 
 // Clears cookies and redirects to /login

@@ -6,6 +6,24 @@
   </head>
 
   <body>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+      function signOut() {
+        gapi.auth2
+          .init({
+            client_id:
+              "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com" /* cspell: disable-line */,
+          })
+          .then(() => {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(() => {
+              document.location.href = "/logout";
+            });
+          });
+      }
+    </script>
+    <br>
+
     <form action="/profile" method="POST">
       <label for=" ical_feed_url">iCal Feed URL:</label><br />
       <input type="text" id="ical_feed_url" name="ical_feed_url" placeholder="Enter iCal feed url" /><br />
