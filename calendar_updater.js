@@ -36,14 +36,14 @@ async function log_info(message, indent, extra = "") {
     .replace(/\..+/, "")
     .replace("\n", "\n" + indent);
 
-  if (extra != "") extra = JSON.stringify(extra).replace("\n", "\n" + indent);
+  // Ensure consistent formatting of log file whether or not parameter extra is provided
+  if (extra != "") extra = JSON.stringify(extra).replace("\n", "\n" + indent) + "\n";
 
   message = message.replace("\n", "\n" + indent);
 
-  to_write = `${indent + logged_time}: \n${indent + message}\n${indent + extra}\n`;
+  to_write = `${logged_time}: \n${indent + message}\n${indent + extra}\n`;
 
-  await fs.appendFileSync(log_file_path, to_write);
-  return;
+  fs.appendFileSync(log_file_path, to_write);
 }
 
 // Create calendar object to be used for API calls
@@ -172,7 +172,6 @@ async function update_user(user) {
           }
           // Must be here because this function "finishes" quickly
           log_info(`Finished updating user: ${user.email}'s calendar`, 0);
-          return true;
         }
       );
     });
