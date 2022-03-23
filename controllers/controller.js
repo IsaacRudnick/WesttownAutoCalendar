@@ -3,7 +3,7 @@ const { OAuth2Client } = require("google-auth-library");
 const CLIENT_ID = "92967650602-un0j7tq20lburr34pkdgbsi20n8nn7ee.apps.googleusercontent.com";
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 const User = require("../models/user");
-const calendar_updater = require("../calendar_updater");
+const calendar_updater = require("../updater/calendar_updater");
 
 const login_get = (req, res) => {
   res.render("login");
