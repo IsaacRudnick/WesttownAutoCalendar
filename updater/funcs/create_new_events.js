@@ -29,7 +29,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     // Skip this loop if the event already exists in google calendar
     if (gcal_events.filter((e) => e.description === unique_descriptor).length > 0) {
       log_info("Event already exists in Google Calendar; skipping", 3);
-      // Remove this event from the list of gcal_events
+      // Remove this event from the static list of fetched gcal_events
       gcal_events = gcal_events.filter((obj) => {
         return obj.description !== unique_descriptor;
       });

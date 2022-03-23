@@ -2,13 +2,12 @@ const User = require("../models/user");
 const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require("toad-scheduler");
 const scheduler = new ToadScheduler();
 const log_info = require("./funcs/log_info");
-const calendar = require("./funcs/calendar_client");
-const snooze = require("./funcs/snooze");
 const get_ical_events = require("./funcs/get_ical_events");
 const get_gcal_events = require("./funcs/get_gcal_events");
 const calendar_client = require("./funcs/calendar_client");
 const create_new_events = require("./funcs/create_new_events");
 const delete_old_events = require("./funcs/delete_old_events");
+const newline = require("./funcs/newline");
 
 // FIXME: delete
 test_url =
@@ -18,16 +17,19 @@ async function update_user(email, ical_feed_url) {
   log_info(`Updating ${email}'s calendar`, 0);
   log_info("Getting iCal events", 1);
   ical_events = await get_ical_events(ical_feed_url);
+  log_info(`Found ${Object.entries(ical_events).length} iCal events`, 1);
+
   log_info("Getting Google Calendar events", 1);
   gcal_events = await get_gcal_events(email, calendar_client);
+  log_info(`Found ${gcal_events.length} Google Calendar events`, 1);
 
   log_info("Creating new events", 1);
   await create_new_events(ical_events, gcal_events, email, calendar_client).then(async (remaining_events) => {
-    // TODO: uncomment this
-    // log_info("Deleting old events", 1);
-    // await delete_old_events(remaining_events, email, calendar_client);
+    log_info("Deleting old events", 1);
+    await delete_old_events(remaining_events, email, calendar_client);
   });
   log_info(`Finished updating user: ${email}'s calendar`, 0);
+  newline(1);
 }
 
 update_user("roo.turin@gmail.com", test_url);
