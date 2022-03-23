@@ -1,4 +1,3 @@
-const { addWeeks } = require("date-fns");
 const { google } = require("googleapis");
 const User = require("./models/user");
 const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require("toad-scheduler");
@@ -8,17 +7,12 @@ const fetch = require("node-fetch");
 const ical = require("node-ical");
 const cliProgress = require("cli-progress");
 const fs = require("fs");
-const { time } = require("console");
 
 const scopes = ["https://www.googleapis.com/auth/calendar"];
 const client = new google.auth.GoogleAuth({
   keyFile: "./service_account_key.json",
   scopes,
 });
-
-async function newline(count) {
-  console.log("\n".repeat(count));
-}
 
 async function log_info(message, indent, extra = "") {
   // Get current date in format YYYY-MM-DD to write to that log file
@@ -58,19 +52,20 @@ async function update_user(user) {
   log_info(`Updating ${user.email}'s calendar`, 0);
 
   // Get the user's ical feed
-  fetch(user.ical_feed_url, { method: "GET" })
+  await fetch(user.ical_feed_url, { method: "GET" })
     // Convert to text to allow parsing
     .then((res) => res.text())
     .then((text) => {
-      // Parse the raw ical data
-      const ical_events = ical.sync.parseICS(text);
+      // Parse the raw ical data and remove items that are not events (e.g. timezone or calendar info)
+      const ical_events = ical.sync.parseICS(text).filter((e) => e.type === "VEVENT");
 
       /* ======================================== Progress Bar ======================================== */
       //Create progress bar with denominator of number of ical events
       const progress_bar = new cliProgress.SingleBar(
-        { linewrap: true, barsize: 80 },
+        { linewrap: true, barsize: 80, hideCursor: true, stopOnComplete: true },
         cliProgress.Presets.shades_classic
       );
+
       // Subtracting 2 is a bodge to account for the first and last item not being actual events
       progress_bar.start(Object.keys(ical_events).length - 2, 0);
       newline(1);
