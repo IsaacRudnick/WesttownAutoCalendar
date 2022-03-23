@@ -8,7 +8,6 @@ require("dotenv").config();
 const morgan = require("morgan");
 
 const calendar_updater = require("./updater/calendar_updater.js");
-// calendar_updater.start_update_loop();
 
 // allows url encoding
 app.use(express.urlencoded({ extended: true }));
@@ -31,5 +30,7 @@ mongoose
     port = process.env.PORT || 8080;
     app.listen(port);
     console.log(`Listening on port ${port}`);
+    // Only run the updater when DB connection is established
+    calendar_updater.start_update_loop();
   }) // listen for requests
   .catch((err) => console.log(err)); // log any errors

@@ -1,6 +1,11 @@
 const fetch = require("node-fetch");
 const ical = require("node-ical");
 
+/**
+ *
+ * @param {string} ical_feed_url the url of the ical feed
+ * @returns
+ */
 async function get_ical_events(ical_feed_url) {
   return (
     fetch(ical_feed_url, { method: "GET" })

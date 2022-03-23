@@ -4,6 +4,12 @@ const snooze = require("./snooze");
 
 client_email = JSON.parse(fs.readFileSync("./service_account_key.json"))["client_email"];
 
+/**
+ * @param {string} email the email of the user
+ * @param {Object} calendar_client Google calendar client
+ * @param {string} pageToken used for recursion
+ * @returns {Array} Array of all Google Calendar events **made by this script**
+ */
 async function get_gcal_events(email, calendar_client, pageToken = null) {
   response_info = await calendar_client.events.list({
     pageToken: pageToken,

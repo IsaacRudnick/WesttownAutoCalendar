@@ -1,5 +1,9 @@
 const cliProgress = require("cli-progress");
 
+/**
+ * @description creates a progress bar for the user to see how far along the process is
+ * @returns {Object} A cli-progress bar object
+ */
 function create_progress_bar() {
   // 2/3 of terminal width minus the added info (percent, ETA, fraction)
   bar_width = Math.round(process.stdout.columns / 2);

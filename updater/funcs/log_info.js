@@ -1,5 +1,13 @@
 const fs = require("fs");
 
+/**
+ * This function:
+ * - logs the provided message to the console
+ * - Writes the message, with the date and time, to the log file
+ * @param {string} message the message to be outputted and logged
+ * @param {int} indent the number of spaces to indent the log
+ * @param {string || JSON} extra extra information to be logged and NOT outputted
+ */
 async function log_info(message, indent, extra = "") {
   // Get current date in format YYYY-MM-DD to write to that log file
   date = new Date().toISOString().slice(0, 10);
