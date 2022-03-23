@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 //User will later add in other data or information
@@ -13,4 +13,4 @@ const userSchema = new Schema(
 );
 
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+export default { User };

@@ -1,4 +1,4 @@
-const cliProgress = require("cli-progress");
+import cliProgress from "cli-progress";
 
 /**
  * @description creates a progress bar for the user to see how far along the process is
@@ -12,4 +12,4 @@ function create_progress_bar() {
     cliProgress.Presets.shades_classic
   );
 }
-module.exports = create_progress_bar;
+export default { create_progress_bar };

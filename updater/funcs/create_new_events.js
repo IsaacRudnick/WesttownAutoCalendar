@@ -1,7 +1,7 @@
-const create_progress_bar = require("./create_progress_bar");
-const log_info = require("./log_info");
-const snooze = require("./snooze");
-const newline = require("./newline");
+import create_progress_bar from "./create_progress_bar.js";
+import log_info from "./log_info.js";
+import snooze from "./snooze.js";
+import newline from "./newline.js";
 
 /**
  * This function:
@@ -9,10 +9,10 @@ const newline = require("./newline");
  * - For each ical_event, it checks if the event is already in the google calendar
  * - If it isn't, it creates a new event in the google calendar
  *
- * @param {Array} ical_events
- * @param {Array} gcal_events
- * @param {string} email
- * @param {Object} calendar_client
+ * @param {Array} ical_events Array of all events from the ical feed
+ * @param {Array} gcal_events Array of all events from the Google Calendar
+ * @param {string} email - the email of the user
+ * @param {Object} calendar_client - the Google Calendar client
  * @returns {Array} An array of all provided gcal_events that were not in the ical_events
  */
 async function create_new_events(ical_events, gcal_events, email, calendar_client) {
@@ -77,4 +77,4 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
   return gcal_events;
 }
 
-module.exports = create_new_events;
+export default { create_new_events };

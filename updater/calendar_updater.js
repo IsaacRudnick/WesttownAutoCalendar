@@ -1,13 +1,13 @@
-const User = require("../models/user");
-const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require("toad-scheduler");
+import User from "../models/user.js";
+import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 const scheduler = new ToadScheduler();
-const log_info = require("./funcs/log_info");
-const get_ical_events = require("./funcs/get_ical_events");
-const get_gcal_events = require("./funcs/get_gcal_events");
-const calendar_client = require("./funcs/calendar_client");
-const create_new_events = require("./funcs/create_new_events");
-const delete_old_events = require("./funcs/delete_old_events");
-const newline = require("./funcs/newline");
+import log_info from "./funcs/log_info.js";
+import get_ical_events from "./funcs/get_ical_events.js";
+import get_gcal_events from "./funcs/get_gcal_events.js";
+import calendar_client from "./funcs/calendar_client.js";
+import create_new_events from "./funcs/create_new_events.js";
+import delete_old_events from "./funcs/delete_old_events.js";
+import newline from "./funcs/newline.js";
 
 /**
  * This function:
@@ -47,10 +47,9 @@ async function update_user(email, ical_feed_url) {
  *  - Gets all users with ical feeds set up from the DB
  *  - Calls {@link update_user} for each user
  */
-
 async function update_all_users() {
   // For all users in DB, update them using update_user function
-  User.find({ ical_feed_url: { $ne: null } }, async (err, users) => {
+  User.find({ ical_feed_url: { $ne: null } }).then(async (err, users) => {
     for (var i = 0; i < users.length; i++) {
       user = users[i];
       await update_user(user.email, user.ical_feed_url);
@@ -73,4 +72,4 @@ function start_update_loop() {
 }
 // Allow other files to access the update_user function
 // So when a user sets up the service, it runs once for them
-module.exports = { start_update_loop, update_user };
+export { start_update_loop, update_user };

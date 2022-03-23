@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "��#\u0000 \u0000W\u0000e\u0000s\u0000t\u0000t\u0000o\u0000w\u0000n\u0000A\u0000u\u0000t\u0000o\u0000C\u0000a\u0000l\u0000e\u0000n\u0000d\u0000a\u0000r\u0000\r\u0000 \u0000",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-docs": "yarn jsdoc ./updater -r -d ./updater/documentation"
   },
   "repository": {
     "type": "git",
@@ -26,10 +28,11 @@
     "global": "^4.4.0",
     "google-auth-library": "^7.14.0",
     "googleapis": "^97.0.0",
+    "jsdoc": "^3.6.10",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
-    "node-fetch": "2.6.1",
     "node-ical": "^0.15.1",
+    "replace-require-with-import": "^2.1.0",
     "toad-scheduler": "^1.6.0"
   },
   "devDependencies": {

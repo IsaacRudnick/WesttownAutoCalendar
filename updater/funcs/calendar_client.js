@@ -1,4 +1,4 @@
-const { google } = require("googleapis");
+import { google } from "googleapis";
 
 const client = new google.auth.GoogleAuth({
   keyFile: "./service_account_key.json",
@@ -6,4 +6,4 @@ const client = new google.auth.GoogleAuth({
 });
 const calendar_client = google.calendar({ version: "v3", auth: client });
 
-module.exports = calendar_client;
+export default { calendar_client };

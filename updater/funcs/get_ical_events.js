@@ -1,10 +1,10 @@
-const fetch = require("node-fetch");
-const ical = require("node-ical");
+import fetch from "node-fetch";
+import ical from "node-ical";
 
 /**
  *
  * @param {string} ical_feed_url the url of the ical feed
- * @returns
+ * @returns {Array} Array of all events in the ical feed
  */
 async function get_ical_events(ical_feed_url) {
   return (
@@ -19,4 +19,4 @@ async function get_ical_events(ical_feed_url) {
   );
 }
 
-module.exports = get_ical_events;
+export default { get_ical_events };

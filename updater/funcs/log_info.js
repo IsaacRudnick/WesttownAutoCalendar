@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 /**
  * This function:
@@ -6,12 +6,12 @@ const fs = require("fs");
  * - Writes the message, with the date and time, to the log file
  * @param {string} message the message to be outputted and logged
  * @param {int} indent the number of spaces to indent the log
- * @param {string || JSON} extra extra information to be logged and NOT outputted
+ * @param {string | Object} extra extra information to be logged and NOT outputted
  */
 async function log_info(message, indent, extra = "") {
   // Get current date in format YYYY-MM-DD to write to that log file
   date = new Date().toISOString().slice(0, 10);
-  log_file_path = `./logs/${date}.txt`;
+  log_file_path = `/logs/${date}.txt`;
 
   console.log(message);
 
@@ -30,4 +30,4 @@ async function log_info(message, indent, extra = "") {
   fs.appendFileSync(log_file_path, to_write);
 }
 
-module.exports = log_info;
+export default { log_info };

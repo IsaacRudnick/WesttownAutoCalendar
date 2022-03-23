@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const controller = require("../controllers/controller");
+import jwt from "jsonwebtoken";
+import * as controller from "../controllers/controller.js";
 
 // Verify JWT token
 // If invalid, redirect to /login
@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
   });
 }
 // Redirect index to login
-router.get("/", (req, res) => res.redirect("/login"))
+router.get("/", (req, res) => res.redirect("/login"));
 router.get("/login", controller.login_get);
 router.post("/login", controller.login_post);
 
@@ -32,4 +32,4 @@ router.post("/profile", authenticateToken, controller.profile_post);
 
 router.get("/logout", controller.logout_get);
 
-module.exports = router;
+export default router;

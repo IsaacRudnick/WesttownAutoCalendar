@@ -5,4 +5,4 @@
 async function newline(count) {
   console.log("\n".repeat(count));
 }
-module.exports = newline;
+export default { newline };

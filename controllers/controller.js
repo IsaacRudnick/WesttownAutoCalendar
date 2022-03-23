@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
+import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 const CLIENT_ID = "92967650602-un0j7tq20lburr34pkdgbsi20n8nn7ee.apps.googleusercontent.com";
 const oauth2_client = new OAuth2Client(CLIENT_ID);
-const User = require("../models/user");
-const calendar_updater = require("../updater/calendar_updater");
+import User from "../models/user.js";
+import { update_user } from "../updater/calendar_updater.js";
 
 const login_get = (req, res) => {
   res.render("login");
@@ -49,7 +49,7 @@ const profile_post = (req, res) => {
     if (err) {
       console.log(err);
     }
-    calendar_updater.update_user({ email, ical_feed_url });
+    update_user({ email, ical_feed_url });
   });
 
   res.render("success");
@@ -61,10 +61,4 @@ const logout_get = (req, res) => {
   res.redirect("/login");
 };
 
-module.exports = {
-  login_get,
-  login_post,
-  profile_get,
-  profile_post,
-  logout_get,
-};
+export { login_get, login_post, profile_get, profile_post, logout_get };

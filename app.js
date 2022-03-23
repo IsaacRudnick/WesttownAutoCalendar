@@ -1,13 +1,14 @@
-const cookieParser = require("cookie-parser");
-const express = require("express");
+import cookieParser from "cookie-parser";
+import express from "express";
 const app = express();
-const routes = require("./routes/routes");
-const mongoose = require("mongoose");
-require("dotenv").config();
+import routes from "./routes/routes.js";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-const morgan = require("morgan");
+import morgan from "morgan";
 
-const calendar_updater = require("./updater/calendar_updater.js");
+import { start_update_loop as start_calendar_updater } from "./updater/calendar_updater.js";
 
 // allows url encoding
 app.use(express.urlencoded({ extended: true }));
@@ -27,10 +28,10 @@ const dbURI = process.env.DBURI;
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    port = process.env.PORT || 8080;
+    let port = process.env.PORT || 8080;
     app.listen(port);
     console.log(`Listening on port ${port}`);
     // Only run the updater when DB connection is established
-    calendar_updater.start_update_loop();
+    start_calendar_updater();
   }) // listen for requests
   .catch((err) => console.log(err)); // log any errors

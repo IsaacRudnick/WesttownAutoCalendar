@@ -1,13 +1,12 @@
-const { addWeeks } = require("date-fns");
-const fs = require("fs");
-const snooze = require("./snooze");
+import { addWeeks } from "date-fns";
+import fs from "fs";
+import snooze from "./snooze.js";
 
-client_email = JSON.parse(fs.readFileSync("./service_account_key.json"))["client_email"];
+let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
 
 /**
  * @param {string} email the email of the user
  * @param {Object} calendar_client Google calendar client
- * @param {string} pageToken used for recursion
  * @returns {Array} Array of all Google Calendar events **made by this script**
  */
 async function get_gcal_events(email, calendar_client, pageToken = null) {
@@ -37,4 +36,4 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
   }
 }
 
-module.exports = get_gcal_events;
+export default { get_gcal_events };

@@ -1,14 +1,14 @@
-const create_progress_bar = require("./create_progress_bar");
-const log_info = require("./log_info");
-const snooze = require("./snooze");
-const newline = require("./newline");
+import create_progress_bar from "./create_progress_bar.js";
+import log_info from "./log_info.js";
+import snooze from "./snooze.js";
+import newline from "./newline.js";
 
 /**
  * @description Delete all remaining events
  *
- * @param {Array} remaining_events
- * @param {string} email
- * @param {Object} calendar_client
+ * @param {Array} remaining_events Array of all remaining Google Calendar events
+ * @param {string} email email address of user
+ * @param {Object} calendar_client Google Calendar client
  */
 async function delete_old_events(remaining_events, email, calendar_client) {
   // Remove google calendar events ~made by this script~ that are no longer in the user's ical feed
@@ -31,4 +31,4 @@ async function delete_old_events(remaining_events, email, calendar_client) {
   }
 }
 
-module.exports = delete_old_events;
+export default { delete_old_events };
