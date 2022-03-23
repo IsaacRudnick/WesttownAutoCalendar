@@ -14,7 +14,7 @@ calendar_updater.start_update_loop();
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
-// Logging middleware
+// Web request logging middleware
 app.use(morgan("dev"));
 // used to parse JSON bodies and replaces deprecated body-parser
 app.use(express.json());
