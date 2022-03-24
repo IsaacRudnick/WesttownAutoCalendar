@@ -37,7 +37,9 @@ const login_post = (req, res) => {
 
 let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
 const setup_get = (req, res) => {
-  res.render("setup", { client_email: client_email });
+  User.findOne({ email: req.verified_email }).then((user) => {
+    res.render("setup", { client_email: client_email, ical_feed_url: user?.ical_feed_url });
+  });
 };
 
 const setup_post = (req, res) => {

@@ -1,4 +1,4 @@
-import { addWeeks } from "date-fns";
+import moment from "moment";
 import fs from "fs";
 import snooze from "./snooze.js";
 import log_info from "./log_info.js";
@@ -16,9 +16,9 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
       pageToken: pageToken,
       // The user's primary calendar's ID = their email address
       calendarId: email,
-      timeMin: new Date().toISOString(),
+      timeMin: moment().toISOString(),
       // Goes more than 8 (mySchoolApp default) weeks just in case
-      timeMax: addWeeks(new Date(), 12).toISOString(),
+      timeMax: moment().add(3, "months").toISOString(),
       // Ignore deleted events
       singleEvents: true,
       orderBy: "startTime",
@@ -38,7 +38,7 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
       return events.filter((event) => event.creator.email == client_email);
     }
   } catch (error) {
-    log_info("Error getting Google Calendar Events", 2, error);
+    await log_info("Error getting Google Calendar Events", 2, error);
     return false;
   }
 }

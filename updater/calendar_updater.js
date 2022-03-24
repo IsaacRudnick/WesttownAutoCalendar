@@ -22,18 +22,18 @@ import newline from "./funcs/newline.js";
 async function update_user(email, ical_feed_url) {
   log_info(`Updating ${email}'s calendar`, 0);
 
-  log_info("Getting iCal events", 1);
+  await log_info("Getting iCal events", 1);
   let ical_events = await get_ical_events(ical_feed_url);
   if (!ical_events) {
-    log_info("Skipping this user", 1);
+    await log_info("Skipping this user", 1);
     return;
   }
   log_info(`Found ${Object.entries(ical_events).length} iCal events`, 1);
 
-  log_info("Getting Google Calendar events", 1);
+  await log_info("Getting Google Calendar events", 1);
   let gcal_events = await get_gcal_events(email, calendar_client);
   if (!gcal_events) {
-    log_info("Skipping this user", 1);
+    await log_info("Skipping this user", 1);
     return;
   }
   log_info(`Found ${gcal_events.length} Google Calendar events`, 1);
@@ -42,9 +42,9 @@ async function update_user(email, ical_feed_url) {
   // If you wish to do this, comment out the lines in this function below this one.
   // await delete_old_events(gcal_events, email, calendar_client);
 
-  log_info("Creating new events", 1);
+  await log_info("Creating new events", 1);
   await create_new_events(ical_events, gcal_events, email, calendar_client).then(async (remaining_events) => {
-    log_info("Deleting old events", 1);
+    await log_info("Deleting old events", 1);
     await delete_old_events(remaining_events, email, calendar_client);
   });
   newline(1);

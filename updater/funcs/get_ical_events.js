@@ -20,7 +20,7 @@ async function get_ical_events(ical_feed_url) {
       });
     return ical_data;
   } catch (error) {
-    log_info("Error getting iCal Events", 2, error);
+    await log_info("Error getting iCal Events", 2, error);
     return false;
   }
 }

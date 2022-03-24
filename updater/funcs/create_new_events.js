@@ -43,13 +43,13 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
 
     // Skip this loop if the event already exists in google calendar
     if (gcal_events.filter((e) => e.description === unique_descriptor).length > 0) {
-      log_info("Event already exists in Google Calendar; skipping", 3);
+      await log_info("Event already exists in Google Calendar; skipping", 3);
       // Remove this event from the static list of fetched gcal_events
       gcal_events = gcal_events.filter((obj) => {
         return obj.description !== unique_descriptor;
       });
     } else {
-      log_info("Event doesn't exist in Google Calendar; creating...", 3);
+      await log_info("Event doesn't exist in Google Calendar; creating...", 3);
       // Pause each iteration to avoid rate limiting
       await snooze(500);
 
@@ -71,7 +71,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
             status: "confirmed",
           },
         })
-        .then(log_info("Event created", 3));
+        .then(await log_info("Event created", 3));
     }
     newline(1);
     progress_bar.increment();

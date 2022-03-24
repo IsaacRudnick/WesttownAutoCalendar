@@ -1,4 +1,5 @@
 import fs from "fs";
+import moment from "moment-timezone";
 /**
  * This function:
  * - logs the provided message to the console
@@ -9,8 +10,8 @@ import fs from "fs";
  */
 async function log_info(message, indent, extra = "") {
   // Get current date in format YYYY-MM-DD to write to that log file
-  let date = new Date().toISOString().slice(0, 10);
-  let log_file_path = `./updater/logs/${date}.txt`;
+  let today = moment().tz("America/New_York").format("YYYY-MM-DD");
+  let log_file_path = `./updater/logs/${today}.mylog`;
 
   console.log(message);
 
