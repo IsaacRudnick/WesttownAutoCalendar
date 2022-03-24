@@ -27,10 +27,14 @@ All calls are easy to follow. Look through the code starting here:
 
 - app.js is the main file. It is the entry point for the program.
 - app.js connects to the DB and then:
-- - begins the calendar syncing part of the program (`/updater`)
-- - begins listening for web requests
+  - begins the calendar syncing part of the program (`/updater`)
+  - begins listening for web requests
 
 ### Logs
 
 There are log files for the last three days in the `/updater/logs` folder.
 They contain a lot of useful information, but don't make up for working debugging.
+
+# Documentation
+
+Incredibly helpful documentation can be found in `/updater/docs` in the form of a static website. Open any of the `.html` files in your broswer and you will be able to navigate through the documentation. This folder is made by running `npm run build-docs`. As said earlier, please maintain the quality of this codebase; all functions are documented with [JSDoc Docstrings](https://jsdoc.app/about-getting-started.html)

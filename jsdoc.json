@@ -1,11 +1,11 @@
 {
   "source": {
-    "include": ["README.md"]
+    "include": ["README.md"],
+    "excludePattern": "docs"
   },
 
   "opts": {
     "encoding": "utf8",
-    "recurse": true,
     "verbose": true,
     "template": "./node_modules/clean-jsdoc-theme",
     "theme_opts": {

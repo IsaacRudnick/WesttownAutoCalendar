@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-docs": "yarn jsdoc ./updater --configure jsdoc.json --verbose"
+    "build-docs": "yarn jsdoc ./updater/funcs  ./updater/calendar_updater.js -r --configure jsdoc.json"
   },
   "repository": {
     "type": "git",
