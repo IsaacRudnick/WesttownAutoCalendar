@@ -13,6 +13,9 @@ async function log_info(message, indent, extra = "") {
   let today = moment().tz("America/New_York").format("YYYY-MM-DD");
   let log_file_path = `./updater/logs/${today}.mylog`;
 
+  // Uncomment this line avoid writing to the log file
+  // return
+
   console.log(message);
 
   indent = "\t".repeat(indent + 1);
