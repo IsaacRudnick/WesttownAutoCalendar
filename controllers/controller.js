@@ -45,7 +45,9 @@ const profile_post = (req, res) => {
   const ical_feed_url = req.body.ical_feed_url;
 
   // Find user by email and update their ical_feed_url
-  const user = User.findOneAndUpdate({ email }, { ical_feed_url }, (err, user) => {
+  User.findOneAndUpdate({ email }, { ical_feed_url }, (err, user) => {
+    assert(email == user.email);
+    asser(ical_feed_url == user.ical_feed_url);
     if (err) {
       console.log(err);
     }

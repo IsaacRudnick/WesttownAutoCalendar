@@ -13,10 +13,10 @@ async function get_ical_events(ical_feed_url) {
       .then((res) => res.text())
       .then((text) => {
         // Parse the raw ical data
-        ical_events = ical.sync.parseICS(text);
+        let ical_events = ical.sync.parseICS(text);
         return ical_events;
       })
   );
 }
 
-export default { get_ical_events };
+export default get_ical_events;

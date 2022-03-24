@@ -10,7 +10,7 @@ let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.jso
  * @returns {Array} Array of all Google Calendar events **made by this script**
  */
 async function get_gcal_events(email, calendar_client, pageToken = null) {
-  response_info = await calendar_client.events.list({
+  let response_info = await calendar_client.events.list({
     pageToken: pageToken,
     // The user's primary calendar's ID = their email address
     calendarId: email,
@@ -22,7 +22,7 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
     orderBy: "startTime",
     maxResults: 2500,
   });
-  events = response_info.data.items;
+  let events = response_info.data.items;
 
   pageToken = response_info.data.nextPageToken;
 
@@ -36,4 +36,4 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
   }
 }
 
-export default { get_gcal_events };
+export default get_gcal_events;

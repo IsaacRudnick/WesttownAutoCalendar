@@ -12,7 +12,7 @@ import newline from "./newline.js";
  */
 async function delete_old_events(remaining_events, email, calendar_client) {
   // Remove google calendar events ~made by this script~ that are no longer in the user's ical feed
-  progress_bar = create_progress_bar();
+  let progress_bar = create_progress_bar();
   progress_bar.start(Object.keys(remaining_events).length, 0);
 
   for (const [key, gcal_event] of Object.entries(remaining_events)) {
@@ -31,4 +31,4 @@ async function delete_old_events(remaining_events, email, calendar_client) {
   }
 }
 
-export default { delete_old_events };
+export default delete_old_events;
