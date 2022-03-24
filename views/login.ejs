@@ -29,7 +29,7 @@
           body: JSON.stringify({ id_token }),
         })
           .then((res) => {
-            if (res.redirected == true) {
+            if (res.redirected) {
               location.assign(res.url);
             }
           })

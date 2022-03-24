@@ -1,7 +1,7 @@
 import cliProgress from "cli-progress";
 
 /**
- * @description creates a progress bar for the user to see how far along the process is
+ * Creates a progress bar for the user to see how far along the process is
  * @returns {Object} A cli-progress bar object
  */
 function create_progress_bar() {
