@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-docs": "yarn jsdoc ./updater -r -d ./updater/documentation"
+    "build-docs": "yarn jsdoc ./updater --configure jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,6 @@
     "global": "^4.4.0",
     "google-auth-library": "^7.14.0",
     "googleapis": "^97.0.0",
-    "jsdoc": "^3.6.10",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
@@ -37,6 +36,8 @@
     "toad-scheduler": "^1.6.0"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.10",
+    "clean-jsdoc-theme": "^3.3.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
   },
