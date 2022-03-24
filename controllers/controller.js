@@ -18,17 +18,16 @@ const login_post = (req, res) => {
       idToken: token,
       audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
     });
-    var query = { email: ticket.getPayload().email },
-      update = {},
-      options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    var query = { email: ticket.getPayload().email };
+    let options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    const user = await User.findOneAndUpdate(query, update, options);
+    const user = await User.findOneAndUpdate(query, {}, options);
 
     return user;
   }
 
   verifyAndUpdate().then((user) => {
-    jwt_token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+    let jwt_token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
     // FIXME: {secure: true} for production.
     res.cookie("JWT", jwt_token, { httpOnly: true });
     res.redirect("/profile");
@@ -36,7 +35,6 @@ const login_post = (req, res) => {
 };
 
 const profile_get = (req, res) => {
-  id = jwt.decode(req.cookies.JWT).id;
   res.render("profile");
 };
 
@@ -45,13 +43,11 @@ const profile_post = (req, res) => {
   const ical_feed_url = req.body.ical_feed_url;
 
   // Find user by email and update their ical_feed_url
-  User.findOneAndUpdate({ email }, { ical_feed_url }, (err, user) => {
-    assert(email == user.email);
-    asser(ical_feed_url == user.ical_feed_url);
+  User.findOneAndUpdate({ email }, { ical_feed_url }).then(async (err, user) => {
     if (err) {
       console.log(err);
     }
-    update_user({ email, ical_feed_url });
+    update_user(email, ical_feed_url);
   });
 
   res.render("success");

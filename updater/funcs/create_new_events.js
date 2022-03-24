@@ -72,7 +72,6 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     }
     newline(1);
     progress_bar.increment();
-    newline(1);
   }
   return gcal_events;
 }

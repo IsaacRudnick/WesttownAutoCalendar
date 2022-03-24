@@ -28,7 +28,7 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
 
   if (response_info.data.nextPageToken) {
     snooze(500);
-    next_page = await get_gcal_events(email, calendar_client, (pageToken = pageToken));
+    let next_page = await get_gcal_events(email, calendar_client, pageToken);
     return events.concat(next_page);
   } else {
     // Called when highest level of recursion finishes (when no more pages)
