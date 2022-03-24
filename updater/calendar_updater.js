@@ -12,9 +12,9 @@ import newline from "./funcs/newline.js";
 /**
  * This function:
  * - {@link get_ical_events Gets the user's ical feed}
- * - {@link get_gcal_events Gets the user's google calendar events (that were made by this program)}
- * - {@link create_new_events Generates Google Calendar events from the user's ical feed that don't exist in the user's google calendar}
- * - {@link delete_old_events Deletes Google Calendar events that exist in the user's google calendar but not in the user's ical feed}
+ * - {@link get_gcal_events Gets the user's google calendar events} (that were made by this program)
+ * - {@link create_new_events Generates Google Calendar} events from the user's ical feed that don't exist in the user's google calendar
+ * - {@link delete_old_events Deletes incorrect Google Calendar events} that exist in the user's google calendar but not in the user's ical feed
  *
  * @param {string} email email address of user
  * @param {string} ical_feed_url url of user's ical feed
@@ -22,6 +22,7 @@ import newline from "./funcs/newline.js";
 async function update_user(email, ical_feed_url) {
   log_info(`Updating ${email}'s calendar`, 0);
 
+  /* ======================================= Get iCal Events ====================================== */
   await log_info("Getting iCal events", 1);
   let ical_events = await get_ical_events(ical_feed_url);
   if (!ical_events) {
@@ -30,6 +31,7 @@ async function update_user(email, ical_feed_url) {
   }
   log_info(`Found ${Object.entries(ical_events).length} iCal events`, 1);
 
+  /* ================================= Get Google Calendar Events ================================= */
   await log_info("Getting Google Calendar events", 1);
   let gcal_events = await get_gcal_events(email, calendar_client);
   if (!gcal_events) {
@@ -42,6 +44,7 @@ async function update_user(email, ical_feed_url) {
   // If you wish to do this, comment out the lines in this function below this one.
   // await delete_old_events(gcal_events, email, calendar_client);
 
+  /* ======================================= Update Calendar ====================================== */
   await log_info("Creating new events", 1);
   await create_new_events(ical_events, gcal_events, email, calendar_client).then(async (remaining_events) => {
     await log_info("Deleting old events", 1);
