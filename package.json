@@ -30,6 +30,7 @@
     "googleapis": "^97.0.0",
     "jsdoc": "^3.6.10",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^6.2.7",
     "node-ical": "^0.15.1",
     "replace-require-with-import": "^2.1.0",

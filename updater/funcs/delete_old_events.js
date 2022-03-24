@@ -26,6 +26,7 @@ async function delete_old_events(remaining_events, email, calendar_client) {
     // Update progress bar
     newline(1);
     progress_bar.increment();
+    newline(1);
   }
 }
 
