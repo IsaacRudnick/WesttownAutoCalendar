@@ -27,8 +27,8 @@ router.get("/", (req, res) => res.redirect("/login"));
 router.get("/login", controller.login_get);
 router.post("/login", controller.login_post);
 
-router.get("/profile", authenticateToken, controller.profile_get);
-router.post("/profile", authenticateToken, controller.profile_post);
+router.get("/setup", authenticateToken, controller.setup_get);
+router.post("/setup", authenticateToken, controller.setup_post);
 
 router.get("/logout", controller.logout_get);
 

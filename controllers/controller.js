@@ -4,6 +4,7 @@ const CLIENT_ID = "92967650602-un0j7tq20lburr34pkdgbsi20n8nn7ee.apps.googleuserc
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import { update_user } from "../updater/calendar_updater.js";
+import fs from "fs";
 
 const login_get = (req, res) => {
   res.render("login");
@@ -30,15 +31,16 @@ const login_post = (req, res) => {
     let jwt_token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
     // FIXME: {secure: true} for production.
     res.cookie("JWT", jwt_token, { httpOnly: true });
-    res.redirect("/profile");
+    res.redirect("/setup");
   });
 };
 
-const profile_get = (req, res) => {
-  res.render("profile");
+let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
+const setup_get = (req, res) => {
+  res.render("setup", { client_email: client_email });
 };
 
-const profile_post = (req, res) => {
+const setup_post = (req, res) => {
   const email = req.verified_email;
   const ical_feed_url = req.body.ical_feed_url;
 
@@ -59,4 +61,4 @@ const logout_get = (req, res) => {
   res.redirect("/login");
 };
 
-export { login_get, login_post, profile_get, profile_post, logout_get };
+export { login_get, login_post, setup_get, setup_post, logout_get };
