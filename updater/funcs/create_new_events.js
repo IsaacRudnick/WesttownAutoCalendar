@@ -5,11 +5,14 @@ import newline from "./newline.js";
 import moment from "moment";
 
 // This function is an easter egg. It is called to generate a description for events. Most events do not recieve one.
-function get_description(event) {
-  if (event.summary.includes("Robotics")) return "Go Metal Moose!";
+function get_description(event_name) {
+  /* =================================== Guaranteed easter eggs =================================== */
+  if (event_name.includes("Robotics")) return "Go Metal Moose!";
+  if (event_name.includes("Intro to Programming")) return 'print("Hello, World!")';
+
+  /* ============================== Low probability easter eggs (1%) ============================== */
   if (Math.random() > 0.01) return null;
-  // 10% chance of checking for an easter egg
-  if (event.summary.includes("Computer Science")) return "SSdtIGFuIGVhc3RlciBlZ2ch!";
+  if (event_name.includes("Computer Science")) return "SSdtIGFuIGVhc3RlciBlZ2ch!";
 }
 
 /**
@@ -35,10 +38,6 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
   for (const [key, ical_event] of Object.entries(ical_events)) {
     // If not an event (e.g. a timezone or calendar type entry), skip
     if (ical_event.type !== "VEVENT") continue;
-
-    // Create valid google calendar event 'ID' for later use
-    // This doesn't use the event's ID property because MySchoolApp changes the ID property sometimes
-    // These values are only changed from plain text to look cooler
 
     newline(1);
     log_info(`Event: ${ical_event.summary}`, 2, ical_event);
@@ -84,7 +83,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
             },
             summary: ical_event.summary,
             // Easter egg
-            description: get_description(ical_event),
+            description: get_description(ical_event.summary),
             status: "confirmed",
           },
         })
