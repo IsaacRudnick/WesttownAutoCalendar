@@ -5,10 +5,11 @@ const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import { update_user } from "../updater/calendar_updater.js";
 import fs from "fs";
+import calendar_client from "../updater/funcs/calendar_client.js";
 
-const login_get = (req, res) => {
-  res.render("login");
-};
+let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
+
+const login_get = (req, res) => res.render("login");
 
 const login_post = async (req, res) => {
   // For simplicity and cleaner debugging.
@@ -35,22 +36,39 @@ const login_post = async (req, res) => {
   res.redirect("/setup");
 };
 
-let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
+const shareCalendar_get = (req, res) => res.render("steps/shareCalendar", { client_email: client_email });
 
-const setup_get = async (req, res) => {
+const shareCalendar_post = async (req, res) => {
   let user = await User.findOne({ email: req.verified_email });
-  res.render("setup", { client_email: client_email, ical_feed_url: user?.ical_feed_url });
-};
-
-const setup_post = async (req, res) => {
-  const email = req.verified_email;
-  const ical_feed_url = req.body.ical_feed_url;
-
-  // Find user by email and update their ical_feed_url
-  let user = await User.findOneAndUpdate({ email }, { ical_feed_url });
-  update_user(email, ical_feed_url);
-
-  res.render("success");
+  try {
+    await calendar_client.events.insert({
+      calendarId: user.email,
+      resource: {
+        summary: "AutoCal Test",
+        start: {
+          dateTime: new Date().toISOString(),
+          timeZone: "America/New_York",
+        },
+        end: {
+          dateTime: new Date().toISOString(),
+          timeZone: "America/New_York",
+        },
+        status: "cancelled",
+      },
+    });
+  } catch (err) {
+    // If there's an error, give a reason
+    switch (err.errors[0].reason) {
+      case "requiredAccessLevel":
+        var error = 'Error: make sure you choose "Make changes to events" in sharing settings';
+        break;
+      default:
+        var error = "I can't seem to get you calendar events. Please redo all of the steps";
+    }
+    res.send({ error: error });
+    return;
+  }
+  res.render("steps/iCalFeedSetup", { client_email: client_email, ical_feed_url: user?.ical_feed_url });
 };
 
 // Clears cookies and redirects to /login
@@ -59,4 +77,4 @@ const logout_get = (req, res) => {
   res.redirect("/login");
 };
 
-export { login_get, login_post, setup_get, setup_post, logout_get };
+export { login_get, login_post, logout_get, shareCalendar_get, shareCalendar_post };

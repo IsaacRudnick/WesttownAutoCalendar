@@ -12,7 +12,8 @@ import { start_update_loop as start_calendar_updater } from "./updater/calendar_
 
 // allows url encoding
 app.use(express.urlencoded({ extended: true }));
-
+// sets public folder (css, images, browser/client js, etc.)
+app.use(express.static("public"));
 app.set("view engine", "ejs");
 // Web request logging middleware
 app.use(morgan("dev"));

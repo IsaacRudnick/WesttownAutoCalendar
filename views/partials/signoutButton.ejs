@@ -1,0 +1,17 @@
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+
+<script>
+  function init() {
+    gapi.load("auth2");
+  }
+</script>
+
+<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  async function signOut() {
+    await gapi.auth2.init({ client_id: "92967650602-un0j7tq20lburr34pkdgbsi20n8nn7ee.apps.googleusercontent.com" });
+    var auth2 = gapi.auth2.getAuthInstance();
+    await auth2.signOut();
+    document.location.href = "/logout";
+  }
+</script>

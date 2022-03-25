@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <h1>Setup page</h1>
+    <%- include('../partials/signoutButton.ejs') %>
+    <br />
+    <h1>First, you'll need to share your Google Calendar</h1>
+    <ul>
+      <!-- target="_blank" opens in new tab -->
+      <li>Go to your <b>school email's</b> <a href="https://calendar.google.com/" target="_blank">Google Calendar</a></li>
+      <li>On the right side, under "My calendars," click the three dots next to your name</li>
+    </ul>
+    <h2>'Make sure to share your calendar with <%= client_email %> and choose "Make changes to events"'</h2>
+    </form>
+  </body>
+</html>

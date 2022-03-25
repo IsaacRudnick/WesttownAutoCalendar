@@ -52,7 +52,7 @@ async function update_user(email, ical_feed_url) {
   await delete_old_events(remaining_events, email, calendar_client);
 
   newline(1);
-  log_info(`Finished updating user: ${email}'s calendar`, 0);
+  log_info(`Finished updating ${email}'s calendar`, 0);
 }
 
 /**
