@@ -1,0 +1,9 @@
+Add input checking. 
+- User signs in 
+- Website tells user to share calendar with email
+- User confirms share
+- Website checks share works 
+- Website asks for ical feed url
+- User enters url
+- Website checks url works (length > 0 from get_ical_events)
+- Redirect to success.ejs

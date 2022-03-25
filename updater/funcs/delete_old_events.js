@@ -19,10 +19,11 @@ async function delete_old_events(remaining_events, email, calendar_client) {
     log_info(`Removing event: ${gcal_event.summary}`, 2, gcal_event);
     // Pause each iteration to avoid rate limiting
     await snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
-    calendar_client.events.delete({
+    await calendar_client.events.delete({
       calendarId: email,
       eventId: gcal_event.id,
     });
+
     // Update progress bar
     newline(1);
     progress_bar.increment();

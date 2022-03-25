@@ -62,13 +62,11 @@ async function update_user(email, ical_feed_url) {
  */
 async function update_all_users() {
   // For all users in DB, update them using update_user function
-
-  User.find({ ical_feed_url: { $ne: null } }, async (err, users) => {
-    for (var i = 0; i < users.length; i++) {
-      let user = users[i];
-      await update_user(user.email, user.ical_feed_url);
-    }
-  });
+  let users = await User.find({ ical_feed_url: { $ne: null } });
+  for (var i = 0; i < users.length; i++) {
+    let user = users[i];
+    await update_user(user.email, user.ical_feed_url);
+  }
 }
 
 // Create task to check all BGs and schedule it for every 5 minutes (and immediately)
