@@ -17,7 +17,8 @@ I know at some point this code will break. I've attempted to make it as easy as 
 To understand how the program works, you will need a decent understanding of **[Node.js](https://www.smashingmagazine.com/2019/02/node-api-http-es6-javascript/)**
 
 **Please leave this codebase as well-documented as you've found it.**
-The best comments don't explain what something does, but why it does it.
+The best comments don't just explain what something does, but why it does it.
+Apropos of that, please leave good comments for others.
 
 ### Where do I look to start fixing a bug?
 
