@@ -11,18 +11,12 @@ import log_info from "./log_info.js";
  */
 async function get_ical_events(ical_feed_url) {
   try {
-    let ical_data = await fetch(ical_feed_url, { method: "GET" })
-      // Convert to text to allow parsing
-      .then((res) => res.text())
-      .then((text) => {
-        // Parse the raw ical data
-        let ical_events = ical.sync.parseICS(text);
-
-        return ical_events;
-      });
-    return ical_data;
+    let ical_data = await (await fetch(ical_feed_url, { method: "GET" })).text();
+    // Convert to text to allow parsing
+    let ical_events = ical.sync.parseICS(ical_data);
+    return ical_events;
   } catch (error) {
-    await log_info("Error getting iCal Events", 2, error);
+    log_info("Error getting iCal Events", 2, error);
     return false;
   }
 }

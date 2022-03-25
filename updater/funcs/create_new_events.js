@@ -58,36 +58,35 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     });
 
     if (related_gcal_event) {
-      await log_info("Event already exists in Google Calendar; skipping", 3);
+      log_info("Event already exists in Google Calendar; skipping", 3);
       // Remove this event from the static list of fetched gcal_events
       gcal_events = gcal_events.filter((e) => {
         return e !== related_gcal_event;
       });
     } else {
       /* =============================== Otherwise add event to calendar ============================== */
-      await log_info("Event doesn't exist in Google Calendar; creating...", 3);
+      log_info("Event doesn't exist in Google Calendar; creating...", 3);
       // Pause each iteration to avoid rate limiting
       await snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
 
-      calendar_client.events
-        .insert({
-          calendarId: email,
-          resource: {
-            start: {
-              dateTime: ical_event.start,
-              timeZone: ical_event.timeZone,
-            },
-            end: {
-              dateTime: ical_event.end,
-              timeZone: ical_event.timeZone,
-            },
-            summary: ical_event.summary,
-            // Easter egg
-            description: get_description(ical_event.summary),
-            status: "confirmed",
+      await calendar_client.events.insert({
+        calendarId: email,
+        resource: {
+          start: {
+            dateTime: ical_event.start,
+            timeZone: ical_event.timeZone,
           },
-        })
-        .then(await log_info("Event created", 3));
+          end: {
+            dateTime: ical_event.end,
+            timeZone: ical_event.timeZone,
+          },
+          summary: ical_event.summary,
+          // Easter egg
+          description: get_description(ical_event.summary),
+          status: "confirmed",
+        },
+      });
+      log_info("Event created", 3);
     }
     newline(1);
     progress_bar.increment();

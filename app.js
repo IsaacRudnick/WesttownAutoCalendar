@@ -24,17 +24,13 @@ app.use(cookieParser());
 // Direct all requests to routes
 app.use("", routes);
 
-// connect to mongodb & listen for requests
+// connect to mongodb before anything else
 const dbURI = process.env.DBURI;
-mongoose
-  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => {
-    let port = process.env.PORT || 8080;
-    app.listen(port);
-    log_info(`Listening on port ${port}`);
-    // Delete old logs
-    delete_old_logs(3);
-    // Only run the updater when DB connection is established
-    start_calendar_updater();
-  }) // listen for requests
-  .catch((err) => console.log(err)); // log any errors
+await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+app.listen(process.env.PORT);
+log_info(`Listening on port ${process.env.PORT}`);
+// Delete logs from more than 3 days ago
+delete_old_logs(3);
+// Only run the updater when DB connection is established
+start_calendar_updater();

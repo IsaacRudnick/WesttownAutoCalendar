@@ -9,14 +9,13 @@ import moment from "moment-timezone";
  * @param {string | Object} extra extra information to be logged and NOT outputted
  */
 async function log_info(message, indent, extra = "") {
-  // Get current date in format YYYY-MM-DD to write to that log file
-  let today = moment().tz("America/New_York").format("YYYY-MM-DD");
-  let log_file_path = `./updater/logs/${today}.mylog`;
-
+  console.log(message);
   // Uncomment this line avoid writing to the log file
   // return
 
-  console.log(message);
+  // Get current date in format YYYY-MM-DD to write to that log file
+  let today = moment().tz("America/New_York").format("YYYY-MM-DD");
+  let log_file_path = `./updater/logs/${today}.mylog`;
 
   indent = "\t".repeat(indent + 1);
 

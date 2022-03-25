@@ -39,7 +39,7 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
       return events.filter((event) => event.creator.email == client_email);
     }
   } catch (error) {
-    await log_info("Error getting Google Calendar Events", 2, error);
+    log_info("Error getting Google Calendar Events", 2, error);
     return false;
   }
 }
