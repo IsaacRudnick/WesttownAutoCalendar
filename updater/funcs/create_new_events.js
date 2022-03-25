@@ -4,7 +4,7 @@ import snooze from "./snooze.js";
 import newline from "./newline.js";
 import moment from "moment";
 
-// This function is an easter egg. It is called to generate a description for events. Most events do not recieve one.
+// This function is an easter egg. It is called to generate a description for select events
 function get_description(event_name) {
   /* =================================== Guaranteed easter eggs =================================== */
   if (event_name.includes("Robotics")) return "Go Metal Moose!";
