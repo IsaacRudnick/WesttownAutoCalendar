@@ -18,7 +18,7 @@ async function delete_old_events(remaining_events, email, calendar_client) {
   for (const [key, gcal_event] of Object.entries(remaining_events)) {
     log_info(`Removing event: ${gcal_event.summary}`, 2, gcal_event);
     // Pause each iteration to avoid rate limiting
-    await snooze(500);
+    await snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
     calendar_client.events.delete({
       calendarId: email,
       eventId: gcal_event.id,

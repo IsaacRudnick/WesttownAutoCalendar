@@ -17,11 +17,12 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
       // The user's primary calendar's ID = their email address
       calendarId: email,
       timeMin: moment().toISOString(),
-      // Goes more than 8 (mySchoolApp default) weeks just in case
+      // Goes more than 2 (mySchoolApp default) months just in case
       timeMax: moment().add(3, "months").toISOString(),
       // Ignore deleted events
       singleEvents: true,
       orderBy: "startTime",
+      // Lowering this number does not decrease network usage, since this function recurses to get all events
       maxResults: 2500,
     });
 
@@ -30,7 +31,7 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
     pageToken = response_info.data.nextPageToken;
 
     if (response_info.data.nextPageToken) {
-      snooze(500);
+      snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
       let next_page = await get_gcal_events(email, calendar_client, pageToken);
       return events.concat(next_page);
     } else {

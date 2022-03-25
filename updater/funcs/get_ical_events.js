@@ -3,6 +3,8 @@ import ical from "node-ical";
 import log_info from "./log_info.js";
 
 /**
+ * Be aware, iCal "events" include "VCALENDAR", "VTIMEZONE", and possible more objects.
+ * To deal with these, see the loop in {@link create_new_events}
  *
  * @param {string} ical_feed_url the url of the ical feed
  * @returns {Array} Array of all events in the ical feed
