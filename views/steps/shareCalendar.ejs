@@ -18,33 +18,30 @@
     <ul style="font-size: x-large">
       <!-- target="_blank" opens in new tab -->
       <li>
-        Go to your <b>school email's</b> <a href="https://calendar.google.com/" target="_blank">Google Calendar</a>
+        Go to your <b style="font-size: xx-large">school email's</b>
+        <a href="https://calendar.google.com/" target="_blank">Google Calendar</a>
       </li>
       <li>On the left side, under "My calendars," click the three dots next to your name</li>
-      <img src="threeDots.png" style="width: 100px" />
+      <img src="threeDots.png" style="height: 125px" />
       <li>Click "Settings and sharing"</li>
-      <img src="settingsAndSharing.png" style="width: 100px" />
+      <img src="settingsAndSharing.png" style="height: 125px" />
       <li>Under "Share with specific people," click the "+ Add people" button</li>
-      <img src="addPeople.png" style="width: 100px" />
+      <img src="addPeople.png" style="height: 125px" />
       <!-- Copy to email and notify user on click -->
       <li onmousedown="navigator.clipboard.writeText('<%= client_email %>'); alert('Email copied to clipboard')">
-        Enter <%= client_email %> and make sure you select "Make changes to events"
+        Enter <b><%= client_email %></b> and make sure you select "Make changes to events"
       </li>
-      <img src="makeChangesToEvents.png" style="width: 100px" />
+      <img src="makeChangesToEvents.png" style="height: 125px" />
       <li>Click "Send"</li>
 
       <br />
-      <button type="button" onclick="proceed();">Done! Next step</button>
+      <button style="font-size: x-large" type="button" onclick="proceed();">Done! Next step</button>
       <script>
         async function proceed() {
           let res = await fetch("/shareCalendar", { method: "POST" });
-          let text = await res.text();
-          try {
-            let json = await JSON.parse(text);
-            if (json.error) alert(json.error);
-          } catch (e) {
-            document.body.innerHTML = text;
-          }
+
+          if (res.redirected) location.assign(res.url);
+          else alert(await res.text());
         }
       </script>
     </ul>
