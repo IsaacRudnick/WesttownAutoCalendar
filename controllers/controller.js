@@ -34,42 +34,6 @@ const login_post = async (req, res) => {
   let jwt_token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
   // FIXME: {secure: true} for production.
   res.cookie("JWT", jwt_token, { httpOnly: true });
-  res.redirect("/shareCalendar");
-};
-
-const shareCalendar_get = (req, res) =>
-  res.render("steps/shareCalendar", { client_email: client_email, title: "Share your Google Calendar" });
-
-const shareCalendar_post = async (req, res) => {
-  let user = await User.findOne({ email: req.verified_email });
-  try {
-    await calendar_client.events.insert({
-      calendarId: user.email,
-      resource: {
-        summary: "AutoCal Test",
-        start: {
-          dateTime: new Date().toISOString(),
-          timeZone: "America/New_York",
-        },
-        end: {
-          dateTime: new Date().toISOString(),
-          timeZone: "America/New_York",
-        },
-        status: "cancelled",
-      },
-    });
-  } catch (err) {
-    // If there's an error, give a reason
-    switch (err.errors[0].reason) {
-      case "requiredAccessLevel":
-        var error = 'Error: make sure you choose "Make changes to events" in sharing settings';
-        break;
-      default:
-        var error = "I can't seem to get you calendar events. Please redo all of the steps";
-    }
-    res.send(error);
-    return;
-  }
   res.redirect("/iCalFeedSetup");
 };
 
@@ -103,8 +67,6 @@ export {
   login_get,
   login_post,
   logout_get,
-  shareCalendar_get,
-  shareCalendar_post,
   iCalFeedSetup_get,
   iCalFeedSetup_post,
   sucess_get,

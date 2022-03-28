@@ -36,9 +36,6 @@ router.get("/", (req, res) => res.redirect("/login"));
 router.get("/login", controller.login_get);
 router.post("/login", controller.login_post);
 
-router.get("/shareCalendar", authenticateToken, controller.shareCalendar_get);
-router.post("/shareCalendar", authenticateToken, controller.shareCalendar_post);
-
 router.get("/iCalFeedSetup", authenticateToken, controller.iCalFeedSetup_get);
 router.post("/iCalFeedSetup", authenticateToken, controller.iCalFeedSetup_post);
 
