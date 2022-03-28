@@ -3,10 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include("../partials/header.ejs") %>
   </head>
 
   <body>
-    <h1>Success! Your Google Calendar will be filling up shortly</h1>
-    <h2>As events change in MyWesttown, they will update in Google Calendar as well</h2>
+    <%- include('../partials/signoutButton.ejs') %>
+    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+      <div class="bg-image"></div>
+      <div class="no-blur text-center">
+        <h1>Success! Your Google Calendar will be filling up shortly</h1>
+        <h2>As events change in MyWesttown, they will update in Google Calendar as well</h2>
+      </div>
+    </div>
   </body>
 </html>

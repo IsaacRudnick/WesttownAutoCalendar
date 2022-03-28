@@ -10,7 +10,7 @@ import get_ical_events from "../updater/funcs/get_ical_events.js";
 
 let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
 
-const login_get = (req, res) => res.render("login");
+const login_get = (req, res) => res.render("login", { title: "Login" });
 
 const login_post = async (req, res) => {
   // For simplicity and cleaner debugging.
@@ -37,7 +37,8 @@ const login_post = async (req, res) => {
   res.redirect("/shareCalendar");
 };
 
-const shareCalendar_get = (req, res) => res.render("steps/shareCalendar", { client_email: client_email });
+const shareCalendar_get = (req, res) =>
+  res.render("steps/shareCalendar", { client_email: client_email, title: "Share your Google Calendar" });
 
 const shareCalendar_post = async (req, res) => {
   let user = await User.findOne({ email: req.verified_email });
@@ -74,7 +75,7 @@ const shareCalendar_post = async (req, res) => {
 
 const iCalFeedSetup_get = async (req, res) => {
   let user = await User.findOne({ email: req.verified_email });
-  res.render("steps/iCalFeedSetup", { ical_feed_url: user?.ical_feed_url });
+  res.render("steps/iCalFeedSetup", { ical_feed_url: user?.ical_feed_url, title: "Add your MyWesttown iCal Feed URL" });
 };
 
 const iCalFeedSetup_post = async (req, res) => {
@@ -90,7 +91,7 @@ const iCalFeedSetup_post = async (req, res) => {
   res.redirect("/success");
 };
 
-const sucess_get = (req, res) => res.render("steps/success");
+const sucess_get = (req, res) => res.render("steps/success", { title: "Success!" });
 
 // Clears cookies and redirects to /login
 const logout_get = (req, res) => {

@@ -3,52 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <%- include("../partials/header.ejs") %>
   </head>
 
-  <body onload="init()">
-    <h1>Setup page</h1>
+  <body>
     <%- include('../partials/signoutButton.ejs') %>
     <br />
-    <ul style="font-size: x-large">
-      <!-- target="_blank" opens in new tab -->
-      <li>Go to <a href="https://westtown.myschoolapp.com/app/student#myschedule" target="_blank">MyWesttown</a></li>
-      <li>On the left, near the top, make sure you have "month" selected</li>
-      <img src="Month.png" style="height: 100px" />
-      <li>Click the green "Wifi" icon near the top right</li>
-      <li>Copy the <b>Feed URL</b>, NOT the "Webcal URL"</li>
-      <img src="FeedURL.png" style="height: 250px" />
-      <li>Paste that URL here</li>
-    </ul>
-    <br />
+    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+      <div class="bg-image"></div>
+      <div class="no-blur text-center">
+        <%- include("../partials/helpfulImagesToggle.ejs") %>
+        <h1>Now, I need your MyWesttown Calendar</h1>
 
-    <form action="/iCalFeedSetup" method="POST" style="width: auto">
-      <label style="font-size: x-large" for=" ical_feed_url">iCal Feed URL:</label><br />
-      <input
-        style="font-size: x-large; width: 75%"
-        type="text"
-        id="ical_feed_url"
-        name="ical_feed_url"
-        value="<%=ical_feed_url%>"
-      />
-      <br />
-      <hr />
-      <button style="font-size: x-large" type="button" onclick="proceed();">Done! Next step</button>
-    </form>
+        <ul style="font-size: x-large">
+          <!-- target="_blank" opens in new tab -->
+          <li class="list-group-item">
+            Go to <a href="https://westtown.myschoolapp.com/app/student#myschedule" target="_blank">MyWesttown</a>
+          </li>
+          <li class="list-group-item">
+            On the left, near the top, make sure you have "month" selected
+            <img src="Month.png" style="height: 100px" class="helpful-image" />
+          </li>
+          <li class="list-group-item">Click the green "Wifi" icon near the top right</li>
+          <li class="list-group-item">
+            Copy the <b>Feed URL</b>, NOT the "Webcal URL"
+            <img src="FeedURL.png" style="height: 250px" class="helpful-image" />
+          </li>
+          <li class="list-group-item">Paste that URL here</li>
+        </ul>
+        <br />
 
-    <script>
-      async function proceed() {
-        console.log(JSON.stringify({ ical_feed_url: document.getElementById("ical_feed_url").value }));
-        let res = await fetch("/iCalFeedSetup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ical_feed_url: document.getElementById("ical_feed_url").value }),
-        });
-        if (res.redirected) location.assign(res.url);
-        else alert(await res.text());
-      }
-    </script>
+        <form action="/iCalFeedSetup" method="POST" style="width: auto">
+          <label style="font-size: x-large" for=" ical_feed_url">iCal Feed URL:</label><br />
+          <input
+            style="font-size: x-large; width: 75%"
+            type="text"
+            id="ical_feed_url"
+            name="ical_feed_url"
+            value="<%=ical_feed_url%>"
+          />
+          <br />
+          <hr />
+          <button style="font-size: x-large" type="button" onclick="proceed();">Done! Next step</button>
+        </form>
+
+        <script>
+          async function proceed() {
+            console.log(JSON.stringify({ ical_feed_url: document.getElementById("ical_feed_url").value }));
+            let res = await fetch("/iCalFeedSetup", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ ical_feed_url: document.getElementById("ical_feed_url").value }),
+            });
+            if (res.redirected) location.assign(res.url);
+            else alert(await res.text());
+          }
+        </script>
+      </div>
+    </div>
   </body>
 </html>

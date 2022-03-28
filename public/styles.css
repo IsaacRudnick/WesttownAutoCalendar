@@ -1,0 +1,35 @@
+.bg-image {
+  background-image: url("Calendars.png");
+  /* Add the blur effect */
+  filter: blur(12px) brightness(75%);
+  -webkit-filter: blur(12px) brightness(75%);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  object-fit: cover;
+
+  width: 100%;
+
+  z-index: 1;
+  position: absolute;
+}
+
+.no-blur {
+  zoom: 110%;
+  filter: none;
+  z-index: 2;
+}
+.signin {
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
+}
+
+.helpful-image {
+  align-self: center;
+  display: none;
+}
