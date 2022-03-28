@@ -60,9 +60,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     if (related_gcal_event) {
       log_info("Event already exists in Google Calendar; skipping", 3);
       // Remove this event from the static list of fetched gcal_events
-      gcal_events = gcal_events.filter((e) => {
-        return e !== related_gcal_event;
-      });
+      gcal_events = gcal_events.filter((e) => e !== related_gcal_event);
     } else {
       /* =============================== Otherwise add event to calendar ============================== */
       log_info("Event doesn't exist in Google Calendar; creating...", 3);
@@ -90,6 +88,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     }
     newline(1);
     progress_bar.increment();
+    newline(1);
   }
   return gcal_events;
 }

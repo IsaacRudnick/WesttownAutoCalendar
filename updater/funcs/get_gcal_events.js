@@ -16,14 +16,16 @@ async function get_gcal_events(email, calendar_client, pageToken = null) {
       pageToken: pageToken,
       // The user's primary calendar's ID = their email address
       calendarId: email,
-      timeMin: moment().toISOString(),
+      timeMin: moment().startOf("day").toISOString(),
       // Goes more than 2 (mySchoolApp default) months just in case
-      timeMax: moment().add(3, "months").toISOString(),
+      timeMax: moment().add(2.5, "months").toISOString(),
       // Ignore deleted events
       singleEvents: true,
       orderBy: "startTime",
       // Lowering this number does not decrease network usage, since this function recurses to get all events
       maxResults: 2500,
+      // This makes it so if user deleted the event, it won't be re-added
+      // showDeleted: true
     });
 
     let events = response_info.data.items;
