@@ -4,11 +4,7 @@ const CLIENT_ID = "92967650602-un0j7tq20lburr34pkdgbsi20n8nn7ee.apps.googleuserc
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import { update_user } from "../updater/calendar_updater.js";
-import fs from "fs";
-import calendar_client from "../updater/funcs/calendar_client.js";
 import get_ical_events from "../updater/funcs/get_ical_events.js";
-
-let client_email = JSON.parse(fs.readFileSync("./updater/service_account_key.json"))["client_email"];
 
 const login_get = (req, res) => res.render("login", { title: "Login" });
 
@@ -63,11 +59,4 @@ const logout_get = (req, res) => {
   res.redirect("/login");
 };
 
-export {
-  login_get,
-  login_post,
-  logout_get,
-  iCalFeedSetup_get,
-  iCalFeedSetup_post,
-  sucess_get,
-};
+export { login_get, login_post, logout_get, iCalFeedSetup_get, iCalFeedSetup_post, sucess_get };
