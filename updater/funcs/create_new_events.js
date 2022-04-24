@@ -33,14 +33,14 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
   let total_events = Object.values(ical_events).filter((e) => e.type == "VEVENT").length;
   progress_bar.start(total_events, 0);
 
-  log_info(`Creating events on Google Calendar for ${email}`, 1);
+  await log_info(`Creating events on Google Calendar for ${email}`, 1);
   // For loop is written like this to allow for use of async calls *inside* the for loop
   for (const [key, ical_event] of Object.entries(ical_events)) {
     // If not an event (e.g. a timezone or calendar type entry), skip
     if (ical_event.type !== "VEVENT") continue;
 
     newline(1);
-    log_info(`Event: ${ical_event.summary}`, 2, ical_event);
+    await log_info(`Event: ${ical_event.summary}`, 2, ical_event);
 
     /* ==================== Check if the event already exists in google calendar ==================== */
     //  and skip this loop iteration if so
@@ -58,12 +58,12 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
     });
 
     if (related_gcal_event) {
-      log_info("Event already exists in Google Calendar; skipping", 3);
+      await log_info("Event already exists in Google Calendar; skipping", 3);
       // Remove this event from the static list of fetched gcal_events
       gcal_events = gcal_events.filter((e) => e !== related_gcal_event);
     } else {
       /* =============================== Otherwise add event to calendar ============================== */
-      log_info("Event doesn't exist in Google Calendar; creating...", 3);
+      await log_info("Event doesn't exist in Google Calendar; creating...", 3);
       // Pause each iteration to avoid rate limiting
       await snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
 
@@ -84,7 +84,7 @@ async function create_new_events(ical_events, gcal_events, email, calendar_clien
           status: "confirmed",
         },
       });
-      log_info("Event created", 3);
+      await log_info("Event created", 3);
     }
     newline(1);
     progress_bar.increment();

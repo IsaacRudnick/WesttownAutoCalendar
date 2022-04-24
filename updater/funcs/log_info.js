@@ -3,7 +3,8 @@ import moment from "moment-timezone";
 /**
  * This function:
  * - logs the provided message to the console
- * - Writes the message, with the date and time, to the log file
+ * - writes the message, with the date and time, to the log file
+ * - must be awaited to avoid simulatenous attempts to write to a log file
  * @param {string} message the message to be outputted and logged
  * @param {int} indent the number of spaces to indent the log
  * @param {string | Object} extra extra information to be logged and NOT outputted

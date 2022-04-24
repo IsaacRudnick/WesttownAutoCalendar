@@ -17,9 +17,9 @@ async function delete_old_events(remaining_events, email, calendar_client) {
 
   for (const [key, gcal_event] of Object.entries(remaining_events)) {
     // If event is deleted (in trash), skip this iteration
-    // if (gcal_event.status == "cancelled") continue; 
+    // if (gcal_event.status == "cancelled") continue;
 
-    log_info(`Removing event: ${gcal_event.summary}`, 2, gcal_event);
+    await log_info(`Removing event: ${gcal_event.summary}`, 2, gcal_event);
     // Pause each iteration to avoid rate limiting
     await snooze(process.env.API_SLOWDOWN_SNOOZE_MS);
     await calendar_client.events.delete({
