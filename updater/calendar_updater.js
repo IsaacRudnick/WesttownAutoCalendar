@@ -8,6 +8,7 @@ import calendar_client from "./funcs/calendar_client.js";
 import create_new_events from "./funcs/create_new_events.js";
 import delete_old_events from "./funcs/delete_old_events.js";
 import newline from "./funcs/newline.js";
+import delete_old_logs from "./funcs/delete_old_logs.js";
 
 /**
  * This function:
@@ -57,10 +58,13 @@ async function update_user(email, ical_feed_url) {
 
 /**
  * This function:
+ *  - Deletes old logs from /logs
  *  - Gets all users with ical feeds set up from the DB
  *  - Calls {@link update_user} for each user
  */
 async function update_all_users() {
+  // Delete logs from more than 3 days ago
+  delete_old_logs(3);
   // For all users in DB, update them using update_user function
   let users = await User.find({ ical_feed_url: { $ne: null } });
   for (var i = 0; i < users.length; i++) {

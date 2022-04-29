@@ -6,7 +6,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 import morgan from "morgan";
-import delete_old_logs from "./updater/funcs/delete_old_logs.js";
 import log_info from "./updater/funcs/log_info.js";
 import { start_update_loop as start_calendar_updater } from "./updater/calendar_updater.js";
 
@@ -31,7 +30,5 @@ await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true 
 
 app.listen(process.env.PORT);
 await log_info(`Listening on port ${process.env.PORT}`);
-// Delete logs from more than 3 days ago
-delete_old_logs(3);
 // Only run the updater when DB connection is established
 start_calendar_updater();
